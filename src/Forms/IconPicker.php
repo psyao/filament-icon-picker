@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Psyao\IconPicker\Forms;
+namespace Psyao\FilamentIconPicker\Forms;
 
 use Closure;
 use Filament\Actions\Action;

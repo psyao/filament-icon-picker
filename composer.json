@@ -40,13 +40,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Psyao\\IconPicker\\": "src/",
-            "Psyao\\IconPicker\\Database\\Factories\\": "database/factories/"
+            "Psyao\\FilamentIconPicker\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Psyao\\IconPicker\\Tests\\": "tests/"
+            "Psyao\\FilamentIconPicker\\Tests\\": "tests/"
         }
     },
     "scripts": {

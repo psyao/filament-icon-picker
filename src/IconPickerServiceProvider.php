@@ -1,13 +1,13 @@
 <?php
 
-namespace Psyao\IconPicker;
+namespace Psyao\FilamentIconPicker;
 
 use Filament\Support\Assets\Asset;
 use Filament\Support\Facades\FilamentAsset;
 use Filament\Support\Facades\FilamentIcon;
 use Illuminate\Filesystem\Filesystem;
 use Livewire\Features\SupportTesting\Testable;
-use Psyao\IconPicker\Testing\TestsIconPicker;
+use Psyao\FilamentIconPicker\Testing\TestsIconPicker;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;

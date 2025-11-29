@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Psyao\IconPicker\Forms;
+namespace Psyao\FilamentIconPicker\Forms;
 
 use BladeUI\Icons\Factory;
 use BladeUI\Icons\IconsManifest;

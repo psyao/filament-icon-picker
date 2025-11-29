@@ -1,6 +1,6 @@
 <?php
 
-namespace Psyao\IconPicker;
+namespace Psyao\FilamentIconPicker;
 
 use Filament\Contracts\Plugin;
 use Filament\Panel;

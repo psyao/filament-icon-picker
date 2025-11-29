@@ -1,6 +1,6 @@
 <?php
 
-namespace Psyao\IconPicker\Testing;
+namespace Psyao\FilamentIconPicker\Testing;
 
 use Livewire\Features\SupportTesting\Testable;
 
