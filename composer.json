@@ -65,12 +65,8 @@
     },
     "extra": {
         "laravel": {
-            "providers": [
-                "Psyao\\IconPicker\\IconPickerServiceProvider"
-            ],
-            "aliases": {
-                "IconPicker": "Psyao\\IconPicker\\Facades\\IconPicker"
-            }
+            "providers": [],
+            "aliases": {}
         }
     },
     "minimum-stability": "dev",
