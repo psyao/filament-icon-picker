@@ -8,9 +8,11 @@ use BladeUI\Icons\Factory;
 use BladeUI\Icons\IconsManifest;
 use Filament\Support\Enums\Alignment;
 use Filament\Support\Enums\IconSize;
+use Filament\Support\Enums\TextSize;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\Layout\Split;
 use Filament\Tables\Columns\Layout\Stack;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\PaginationMode;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
@@ -92,6 +94,12 @@ class IconPickerTable
                             ->boolean(false)
                             ->tooltip(fn ($record) => $record['name'])
                             ->grow(false),
+                        TextColumn::make('name')
+                            ->size(TextSize::ExtraSmall)
+                            ->limit(15)
+                            ->wrap()
+                            ->alignCenter()
+                            ->visible(fn (Table $table) => $table->getArguments()['showIconLabels'] ?? false),
                     ])->alignment(Alignment::Center),
                 ]),
             ])
@@ -118,12 +126,11 @@ class IconPickerTable
             ->defaultPaginationPageOption(50)
             ->extremePaginationLinks()
             ->paginationMode(PaginationMode::Default)
-            ->contentGrid([
-                'sm' => 4,
-                'md' => 6,
-                'lg' => 8,
-                'xl' => 10,
-            ]);
+            ->contentGrid(
+                fn (Table $table) => $table->getArguments()['showIconLabels'] ?? false
+                    ? ['sm' => 2, 'md' => 3, 'lg' => 4, 'xl' => 6]
+                    : ['sm' => 4, 'md' => 6, 'lg' => 8, 'xl' => 10]
+            );
     }
 
     /**
