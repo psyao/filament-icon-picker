@@ -20,7 +20,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
-class IconPickerTable
+class IconsTable
 {
     /**
      * Cached flattened records built from the BladeUI icons manifest for this request.

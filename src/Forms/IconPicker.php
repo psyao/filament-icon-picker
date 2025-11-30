@@ -99,7 +99,7 @@ class IconPicker extends ModalTableSelect
 
         // Assign protected properties directly instead of calling the setters so we
         // can override and block external calls to those methods.
-        $this->tableConfiguration = IconPickerTable::class;
+        $this->tableConfiguration = IconsTable::class;
 
         $this->tableArguments = fn (Get $get): array => [
             'selected' => $get($this->getName()),
