@@ -150,6 +150,11 @@ class IconsTable
                 continue;
             }
 
+            // Defensive check: manifest may contain set names not present in $sets.
+            if (! isset($sets[$setName])) {
+                continue;
+            }
+
             $prefix = $sets[$setName]['prefix'] ?? $setName;
 
             foreach ($setGroups as $group) {
