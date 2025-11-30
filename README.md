@@ -2,31 +2,53 @@
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/psyao/filament-icon-picker.svg?style=flat-square)](https://packagist.org/packages/psyao/filament-icon-picker)
 [![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/psyao/filament-icon-picker/run-tests.yml?branch=master&label=tests&style=flat-square)](https://github.com/psyao/filament-icon-picker/actions?query=workflow%3Arun-tests+branch%3Amaster)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/psyao/filament-icon-picker/fix-php-code-style-issues.yml?branch=master&label=code%20style&style=flat-square)](https://github.com/psyao/filament-icon-picker/actions?query=workflow%3A"Fix+PHP+code+styling"+branch%3Amaster)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/psyao/filament-icon-picker/fix-php-code-style-issues.yml?branch=master&label=code%20style&style=flat-square)](https://github.com/psyao/filament-icon-picker/actions?query=workflow%3A%22Fix+PHP+code+styling%22+branch%3Amaster)
 [![Total Downloads](https://img.shields.io/packagist/dt/psyao/filament-icon-picker.svg?style=flat-square)](https://packagist.org/packages/psyao/filament-icon-picker)
 
 A Filament form field that provides a searchable icon picker backed
 by [Blade UI Icons](https://blade-ui-kit.com/docs/icons/introduction).
 
-By default, [Filament](https://filamentphp.com/docs/4.x/styling/icons) adds heroicons out of the box. You can
-easily add more icon sets by registering them with Blade Icons.
+By default, [Filament](https://filamentphp.com/docs/4.x/styling/icons) includes Heroicons out of the box. This package
+makes it easy to surface additional icon sets (registered with Blade Icons) in a modal picker.
 
-Notes:
+Notes
 
-- The 'IconPicker' overrides the 'ModalTableSelect' field from Filament.
-- Only use methods provided by this package (via the `IconPicker` field). Using the
-  default `ModalTableSelect` methods may break selection behavior, styling, or live preview functionality.
+- `IconPicker` extends Filament's `ModalTableSelect` and customizes selection and preview behavior.
+- Prefer the `IconPicker` API for configuration and usage — calling `ModalTableSelect` methods directly may break
+  selection, styling, or the live preview.
+
+Table of contents
+
+- [Requirements](#requirements)
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+    - [Forms](#in-forms)
+    - [Tables](#in-tables)
+    - [Infolists](#in-infolists)
+    - [Blade views](#in-blade-views)
+- [Testing](#testing)
+- [Changelog](#changelog)
+- [Contributing](#contributing)
+- [Security Vulnerabilities](#security-vulnerabilities)
+- [Credits](#credits)
+- [License](#license)
+
+## Requirements
+
+- PHP ^8.2
+- Filament 4.x
 
 ## Features
 
-- Icon picker modal with searchable table of icons.
-- Live preview of selected icon.
-- Support for filtering available icon sets.
-- Easy integration with Filament forms.
+- Modal picker with a searchable table of icons
+- Live preview of the selected icon
+- Filter available icon sets
+- Simple integration with Filament forms, tables and infolists
 
 ## Installation
 
-You can install the package via composer:
+Install via Composer:
 
 ```bash
 composer require psyao/filament-icon-picker
@@ -34,10 +56,10 @@ composer require psyao/filament-icon-picker
 
 ## Usage
 
+### In forms
+
 Use the `IconPicker` field inside your Filament form schema. The field opens a modal table that lets users pick an icon
 and renders a live preview automatically.
-
-### In forms
 
 Basic example:
 
@@ -47,58 +69,55 @@ use Psyao\FilamentIconPicker\Forms\IconPicker;
 IconPicker::make('icon')
 ```
 
-To display only specific icon sets, use the `sets` method:
+Limit available sets:
 
 ```php
-use Psyao\FilamentIconPicker\Forms\IconPicker;
-
 IconPicker::make('icon')
     ->sets(['lucide', 'simple-icons'])
 ```
 
-To show labels below the icons in the picker, use the `showIconLabels` method:
-Displaying labeled icons:
+Show labels under icons in the picker:
 
 ```php
-use Psyao\FilamentIconPicker\Forms\IconPicker;
-
 IconPicker::make('icon')
     ->showIconLabels()
 ```
 
 ### In tables
 
-To display the selected icon in a table, use the Filament `IconColumn`:
+To display the selected icon in a Filament table, use `IconColumn`:
 
 ```php
 use Filament\Tables\Columns\IconColumn;
 
 IconColumn::make('icon')
-    ->icon(fn($state) => $state)
+    ->icon(fn ($state) => $state)
 ```
 
 ### In infolists
 
-To display the selected icon in an infolist, use the Filament `IconListItem`:
+To display the selected icon in an infolist, use `IconEntry`:
 
 ```php
 use Filament\Infolists\Components\IconEntry;
 
 IconEntry::make('status')
-    ->icon(fn($state) => $state)
+    ->icon(fn ($state) => $state)
 ```
 
-### In blade views
+### In Blade views
 
-You can render the selected icon in your Blade views like this:
+Render the selected icon in Blade (depending on your Blade Icons helper):
 
 ```blade
-@svg($icon, ['class' => 'size-5']) 
+@svg($icon, ['class' => 'h-5 w-5'])
 
-{{ svg($icon, ['class' => 'size-5']) }}
-``` 
+{{ svg($icon, ['class' => 'h-5 w-5']) }}
+```
 
 ## Testing
+
+Run the test suite with:
 
 ```bash
 composer test
@@ -106,15 +125,15 @@ composer test
 
 ## Changelog
 
-Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+See [CHANGELOG](CHANGELOG.md) for recent changes.
 
 ## Contributing
 
-Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
+See [CONTRIBUTING](.github/CONTRIBUTING.md) for contribution guidelines.
 
 ## Security Vulnerabilities
 
-Please review [our security policy](../../security/policy) on how to report security vulnerabilities.
+Please review [our security policy](../../security/policy) for reporting vulnerabilities.
 
 ## Credits
 
@@ -123,4 +142,4 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+The MIT License (MIT). See [LICENSE.md](LICENSE.md) for details.
