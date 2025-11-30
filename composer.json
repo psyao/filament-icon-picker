@@ -1,16 +1,32 @@
 {
     "name": "psyao/filament-icon-picker",
-    "description": "Add an icon picker to the filament forms",
+    "type": "library",
+    "description": "A Filament form field that provides a searchable icon picker backed by Blade UI Icons manifests.",
     "keywords": [
         "psyao",
         "laravel",
+        "filament",
+        "filament-form",
+        "filament-field",
+        "icon",
+        "icon-picker",
+        "blade-icons",
+        "blade-ui-kit",
         "filament-icon-picker"
     ],
     "homepage": "https://github.com/psyao/filament-icon-picker",
     "support": {
         "issues": "https://github.com/psyao/filament-icon-picker/issues",
-        "source": "https://github.com/psyao/filament-icon-picker"
+        "source": "https://github.com/psyao/filament-icon-picker",
+        "docs": "https://github.com/psyao/filament-icon-picker#readme",
+        "changelog": "https://github.com/psyao/filament-icon-picker/releases"
     },
+    "funding": [
+        {
+            "type": "github",
+            "url": "https://github.com/sponsors/psyao"
+        }
+    ],
     "license": "MIT",
     "authors": [
         {
