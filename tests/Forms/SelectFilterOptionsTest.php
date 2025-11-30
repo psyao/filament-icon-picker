@@ -40,10 +40,7 @@ it('provides select filter options based on available sets and allowed sets', fu
         ]);
 
     // Clear static cache
-    $ref = new \ReflectionClass(IconsTable::class);
-    $prop = $ref->getProperty('flatRecords');
-    $prop->setAccessible(true);
-    $prop->setValue(null);
+    IconsTable::clearFlatRecordsForTesting();
 
     $configured = IconsTable::configure($table);
 
@@ -102,10 +99,7 @@ it('provides all select filter options when sets is null', function () {
         ]);
 
     // Clear static cache
-    $ref = new \ReflectionClass(IconsTable::class);
-    $prop = $ref->getProperty('flatRecords');
-    $prop->setAccessible(true);
-    $prop->setValue(null);
+    IconsTable::clearFlatRecordsForTesting();
 
     $configured = IconsTable::configure($table);
 
@@ -152,10 +146,7 @@ it('evaluates TextColumn visibility closure for showIconLabels', function () {
             'showIconLabels' => false,
         ]);
 
-    $ref = new \ReflectionClass(IconsTable::class);
-    $prop = $ref->getProperty('flatRecords');
-    $prop->setAccessible(true);
-    $prop->setValue(null);
+    IconsTable::clearFlatRecordsForTesting();
 
     $configuredA = IconsTable::configure($tableA);
 
@@ -177,7 +168,7 @@ it('evaluates TextColumn visibility closure for showIconLabels', function () {
         ]);
 
     // Clear cache and reconfigure
-    $prop->setValue(null);
+    IconsTable::clearFlatRecordsForTesting();
     $configuredB = IconsTable::configure($tableB);
 
     $columnsB = $configuredB->getColumns();
