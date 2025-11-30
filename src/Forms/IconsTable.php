@@ -33,6 +33,8 @@ class IconsTable
      * Clear the internal flat records cache. This helper is intentionally public
      * for tests to avoid relying on reflection to reset internal state between
      * test cases. It's low-risk and does not affect runtime behavior.
+     *
+     * @internal Test helper
      */
     public static function clearFlatRecordsForTesting(): void
     {

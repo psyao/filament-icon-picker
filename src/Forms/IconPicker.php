@@ -19,14 +19,22 @@ use LogicException;
 
 class IconPicker extends ModalTableSelect
 {
-    /** @var array<int, string>|Closure|null */
+    /**
+     * Allowed sets (array of set names) or a Closure returning such an array.
+     *
+     * @var array<int, string>|\Closure|null
+     */
     protected array | Closure | null $sets = [];
 
+    /**
+     * Whether to show icon labels. Can be a bool or a Closure returning bool.
+     */
     protected Closure | bool $showIconLabels = false;
 
     /**
      * Set allowed sets. Accepts a Closure or array.
      *
+     * @param  \Closure|array<int,string>  $allowedSets
      * @return $this
      */
     public function sets(Closure | array $allowedSets): static
