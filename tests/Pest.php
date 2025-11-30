@@ -1,5 +1,5 @@
 <?php
 
-use Psyao\IconPicker\Tests\TestCase;
+use Psyao\FilamentIconPicker\Tests\TestCase;
 
 uses(TestCase::class)->in(__DIR__);

@@ -32,7 +32,7 @@ and renders a live preview automatically.
 Basic example:
 
 ```php
-use Psyao\IconPicker\Forms\IconPicker;
+use Psyao\FilamentIconPicker\Forms\IconPicker;
 use Filament\Forms\Form;
 
 // In a resource or form component
@@ -49,7 +49,7 @@ public static function form(Form $form): Form
 Filtering available icon sets:
 
 ```php
-use Psyao\IconPicker\Forms\IconPicker;
+use Psyao\FilamentIconPicker\Forms\IconPicker;
 use Filament\Forms\Form;
 
 // In a resource or form component
@@ -67,7 +67,7 @@ public static function form(Form $form): Form
 Displaying labeled icons:
 
 ```php
-use Psyao\IconPicker\Forms\IconPicker;
+use Psyao\FilamentIconPicker\Forms\IconPicker;
 use Filament\Forms\Form;
 
 // In a resource or form component

@@ -1,6 +1,6 @@
 <?php
 
-namespace Psyao\IconPicker\Tests;
+namespace Psyao\FilamentIconPicker\Tests;
 
 use BladeUI\Heroicons\BladeHeroiconsServiceProvider;
 use BladeUI\Icons\BladeIconsServiceProvider;
@@ -15,7 +15,7 @@ use Filament\Widgets\WidgetsServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Livewire\LivewireServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Psyao\IconPicker\IconPickerServiceProvider;
+use Psyao\FilamentIconPicker\IconPickerServiceProvider;
 use RyanChandler\BladeCaptureDirective\BladeCaptureDirectiveServiceProvider;
 
 class TestCase extends Orchestra
