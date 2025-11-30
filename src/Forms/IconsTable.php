@@ -57,6 +57,7 @@ class IconsTable
                 $allowedSets = $arguments['sets'] ?? null;
 
                 // Start from the cached flattened list (defensive fallback to empty array).
+                /** @var \Illuminate\Support\Collection<int, array<string, mixed>> $records */
                 $records = collect(self::$flatRecords ?? []);
 
                 // Filter early by allowed sets when provided.
@@ -70,6 +71,8 @@ class IconsTable
 
                     [$before, $after] = $records->partition(fn (array $record) => in_array($record['id'], $selectedIds, true));
 
+                    /** @var \Illuminate\Support\Collection<int, array<string, mixed>> $before */
+                    /** @var \Illuminate\Support\Collection<int, array<string, mixed>> $after */
                     $records = $before->concat($after);
                 }
 

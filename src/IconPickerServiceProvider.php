@@ -85,9 +85,9 @@ class IconPickerServiceProvider extends PackageServiceProvider
         Testable::mixin(new TestsIconPicker);
     }
 
-    protected function getAssetPackageName(): ?string
+    protected function getAssetPackageName(): string
     {
-        return 'psyao/filament-icon-picker';
+        return static::$name;
     }
 
     /**
