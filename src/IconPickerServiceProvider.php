@@ -107,7 +107,7 @@ class IconPickerServiceProvider extends PackageServiceProvider
     }
 
     /**
-     * @return array<string>
+     * @return array<string, \BackedEnum|\Illuminate\Contracts\Support\Htmlable|string>
      */
     protected function getIcons(): array
     {

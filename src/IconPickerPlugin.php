@@ -24,13 +24,20 @@ class IconPickerPlugin implements Plugin
 
     public static function make(): static
     {
-        return app(static::class);
+        /** @var static $instance */
+        $instance = app(static::class);
+
+        return $instance;
     }
 
     public static function get(): static
     {
+        /** @var static $instance */
+        $instance = app(static::class);
+
+        // filament() returns the plugin instance associated with the given id.
         /** @var static $plugin */
-        $plugin = filament(app(static::class)->getId());
+        $plugin = filament($instance->getId());
 
         return $plugin;
     }
