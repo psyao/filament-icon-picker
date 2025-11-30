@@ -17,7 +17,7 @@ Notes
 - Prefer the `IconPicker` API for configuration and usage — calling `ModalTableSelect` methods directly may break
   selection, styling, or the live preview.
 
-Table of contents
+## Table of contents
 
 - [Requirements](#requirements)
 - [Features](#features)
