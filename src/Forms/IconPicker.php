@@ -22,19 +22,20 @@ class IconPicker extends ModalTableSelect
     /**
      * Allowed sets (array of set names) or a Closure returning such an array.
      *
-     * @var array<int, string>|\Closure|null
+     * @var array<int,string>|Closure|null
      */
     protected array | Closure | null $sets = [];
 
     /**
      * Whether to show icon labels. Can be a bool or a Closure returning bool.
+     * The evaluated value may be null at runtime, so callers should coerce it.
      */
-    protected Closure | bool $showIconLabels = false;
+    protected Closure | bool | null $showIconLabels = false;
 
     /**
-     * Set allowed sets. Accepts a Closure or array.
+     * Set allowed sets. Accepts a Closure or array of strings.
      *
-     * @param  \Closure|array<int,string>  $allowedSets
+     * @param  Closure|array<int,string>  $allowedSets
      * @return $this
      */
     public function sets(Closure | array $allowedSets): static
@@ -59,7 +60,7 @@ class IconPicker extends ModalTableSelect
     /**
      * Get evaluated sets as an array.
      *
-     * @return array<int, string>
+     * @return array<int,string>
      */
     public function getSets(): array
     {
@@ -72,6 +73,9 @@ class IconPicker extends ModalTableSelect
         return $value;
     }
 
+    /**
+     * Evaluate the showIconLabels flag and return a boolean.
+     */
     public function getShowIconLabels(): bool
     {
         $value = $this->evaluate($this->showIconLabels);
