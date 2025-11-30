@@ -53,7 +53,7 @@ class IconsTable
         }
 
         return $table
-            ->records(function (array $filters, ?string $sortColumn, ?string $sortDirection, ?string $search, int $page, int $recordsPerPage, Table $table) {
+            ->records(function (array $filters, ?string $sortColumn, ?string $sortDirection, ?string $search, int $page, int $recordsPerPage, Table $table): \Illuminate\Pagination\LengthAwarePaginator {
                 $arguments = $table->getArguments();
                 $selected = $arguments['selected'] ?? null;
                 $allowedSets = $arguments['sets'] ?? null;
@@ -63,7 +63,7 @@ class IconsTable
                 $records = collect(self::$flatRecords ?? []);
 
                 // Filter early by allowed sets when provided.
-                if (is_array($allowedSets) && count($allowedSets) > 0) {
+                if (is_array($allowedSets) && $allowedSets !== []) {
                     $allowedSetsArr = array_values($allowedSets);
                     /** @var array<int,string> $allowedSetsArr */
                     $records = $records->whereIn('set', $allowedSetsArr);
@@ -80,6 +80,7 @@ class IconsTable
 
                         $selectedIds[] = (string) $v;
                     }
+
                     /** @var array<int,string> $selectedIds */
                     [$before, $after] = $records->partition(function (array $record) use ($selectedIds): bool {
                         $id = $record['id'] ?? null;
@@ -134,11 +135,7 @@ class IconsTable
                 $keyedRecords = $records->mapWithKeys(function (array $record): array {
                     $id = $record['id'] ?? null;
 
-                    if (is_scalar($id)) {
-                        $key = (string) $id;
-                    } else {
-                        $key = '';
-                    }
+                    $key = is_scalar($id) ? (string) $id : '';
 
                     /** @var string $key */
                     return [$key => $record];
@@ -174,10 +171,10 @@ class IconsTable
                     ->options(
                         fn (Table $table) => collect($sets)
                             ->when(
-                                function () use ($table) {
+                                function () use ($table): bool {
                                     $allowedSets = $table->getArguments()['sets'] ?? null;
 
-                                    return is_array($allowedSets) && count($allowedSets) > 0;
+                                    return is_array($allowedSets) && $allowedSets !== [];
                                 },
                                 function (Collection $sets) use ($table): Collection {
                                     $allowedSets = $table->getArguments()['sets'] ?? null;
@@ -189,11 +186,11 @@ class IconsTable
                                     $allowedSetsArr = array_values($allowedSets);
                                     /** @var array<int,string> $allowedSetsArr */
 
-                                    return $sets->filter(fn ($_, $key) => in_array($key, $allowedSetsArr, true));
+                                    return $sets->filter(fn ($_, $key): bool => in_array($key, $allowedSetsArr, true));
                                 }
                             )
                             ->mapWithKeys(
-                                fn ($set, $key) => [$key => str($key)->headline()->toString()]
+                                fn ($set, $key): array => [$key => str($key)->headline()->toString()]
                             )
                     ),
             ])
@@ -208,7 +205,7 @@ class IconsTable
             ->extremePaginationLinks()
             ->paginationMode(PaginationMode::Default)
             ->contentGrid(
-                fn (Table $table) => $table->getArguments()['showIconLabels'] ?? false
+                fn (Table $table): array => $table->getArguments()['showIconLabels'] ?? false
                     ? ['sm' => 2, 'md' => 3, 'lg' => 4, 'xl' => 6]
                     : ['sm' => 4, 'md' => 6, 'lg' => 8, 'xl' => 10]
             );
@@ -237,11 +234,7 @@ class IconsTable
             }
 
             $prefixRaw = $sets[$setName]['prefix'] ?? $setName;
-            if (! is_scalar($prefixRaw)) {
-                $prefix = (string) $setName;
-            } else {
-                $prefix = (string) $prefixRaw;
-            }
+            $prefix = is_scalar($prefixRaw) ? (string) $prefixRaw : (string) $setName;
 
             foreach ($setGroups as $group) {
                 if (! is_iterable($group)) {

@@ -100,7 +100,7 @@ class IconPicker extends ModalTableSelect
     {
         parent::setUp();
 
-        parent::beforeContent(function ($state) {
+        parent::beforeContent(function ($state): ?\Illuminate\Support\HtmlString {
             if (is_array($state)) {
                 $state = $state[0] ?? null;
             }
@@ -114,7 +114,7 @@ class IconPicker extends ModalTableSelect
 
         parent::getOptionLabelUsing(fn ($value) => is_callable($value) ? $value() : $value);
 
-        $this->selectAction(function (Action $action) {
+        $this->selectAction(function (Action $action): void {
             $action->modalWidth(Width::SevenExtraLarge);
         });
 
