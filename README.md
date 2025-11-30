@@ -11,6 +11,12 @@ by [Blade UI Icons](https://blade-ui-kit.com/docs/icons/introduction).
 By default, [Filament](https://filamentphp.com/docs/4.x/styling/icons) adds heroicons out of the box. You can
 easily add more icon sets by registering them with Blade Icons.
 
+Notes:
+
+- The 'IconPicker' overrides the 'ModalTableSelect' field from Filament.
+- Only use methods provided by this package (via the `IconPicker` field). Using the
+  default `ModalTableSelect` methods may break selection behavior, styling, or live preview functionality.
+
 ## Features
 
 - Icon picker modal with searchable table of icons.
@@ -31,76 +37,66 @@ composer require psyao/filament-icon-picker
 Use the `IconPicker` field inside your Filament form schema. The field opens a modal table that lets users pick an icon
 and renders a live preview automatically.
 
+### In forms
+
 Basic example:
 
 ```php
 use Psyao\FilamentIconPicker\Forms\IconPicker;
-use Filament\Forms\Form;
 
-// In a resource or form component
-public static function form(Form $form): Form
-{
-    return $form->schema([
-        IconPicker::make('icon')
-            ->label('Icon')
-            ->required(),
-    ]);
-}
+IconPicker::make('icon')
 ```
 
-Filtering available icon sets:
+To display only specific icon sets, use the `sets` method:
 
 ```php
 use Psyao\FilamentIconPicker\Forms\IconPicker;
-use Filament\Forms\Form;
 
-// In a resource or form component
-public static function form(Form $form): Form
-{
-    return $form->schema([
-        IconPicker::make('icon')
-            ->label('Icon')
-            ->sets(['lucide', 'simple-icons'])
-            ->required(),
-    ]);
-}
+IconPicker::make('icon')
+    ->sets(['lucide', 'simple-icons'])
 ```
 
+To show labels below the icons in the picker, use the `showIconLabels` method:
 Displaying labeled icons:
 
 ```php
 use Psyao\FilamentIconPicker\Forms\IconPicker;
-use Filament\Forms\Form;
 
-// In a resource or form component
-public static function form(Form $form): Form
-{
-    return $form->schema([
-        IconPicker::make('icon')
-            ->label('Icon')
-            ->showIconLabels()
-            ->required(),
-    ]);
-}
+IconPicker::make('icon')
+    ->showIconLabels()
 ```
+
+### In tables
+
+To display the selected icon in a table, use the Filament `IconColumn`:
+
+```php
+use Filament\Tables\Columns\IconColumn;
+
+IconColumn::make('icon')
+    ->icon(fn($state) => $state)
+```
+
+### In infolists
+
+To display the selected icon in an infolist, use the Filament `IconListItem`:
+
+```php
+use Filament\Infolists\Components\IconEntry;
+
+IconEntry::make('status')
+    ->icon(fn($state) => $state)
+```
+
+### In blade views
 
 You can render the selected icon in your Blade views like this:
 
 ```blade
 @svg($icon, ['class' => 'size-5']) 
-``` 
 
-or
-
-```blade
 {{ svg($icon, ['class' => 'size-5']) }}
 ``` 
-
-Notes:
-
-- The 'IconPicker' overrides the 'ModalTableSelect' field from Filament.
-- Only use methods provided by this package (via the `IconPicker` field). Using the
-  default `ModalTableSelect` methods may break selection behavior, styling, or live preview functionality.
 
 ## Testing
 
