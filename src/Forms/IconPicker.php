@@ -70,7 +70,16 @@ class IconPicker extends ModalTableSelect
             return [];
         }
 
-        return $value;
+        $result = [];
+        foreach ($value as $item) {
+            if (! is_scalar($item)) {
+                continue;
+            }
+
+            $result[] = (string) $item;
+        }
+
+        return $result;
     }
 
     /**

@@ -43,7 +43,9 @@ class IconsTable
 
     public static function configure(Table $table): Table
     {
+        /** @var array<string, array<string, mixed>> $sets */
         $sets = app(Factory::class)->all();
+        /** @var array<mixed> $manifest */
         $manifest = app(IconsManifest::class)->getManifest($sets);
 
         if (self::$flatRecords === null) {
@@ -62,14 +64,35 @@ class IconsTable
 
                 // Filter early by allowed sets when provided.
                 if (is_array($allowedSets) && count($allowedSets) > 0) {
-                    $records = $records->whereIn('set', $allowedSets);
+                    $allowedSetsArr = array_values($allowedSets);
+                    /** @var array<int,string> $allowedSetsArr */
+                    $records = $records->whereIn('set', $allowedSetsArr);
                 }
 
                 // If selected values exist, move them to the front.
                 if (filled($selected)) {
-                    $selectedIds = is_array($selected) ? $selected : [$selected];
+                    // Normalize selected ids to strings and ensure an array.
+                    $selectedIds = [];
+                    foreach ((array) $selected as $v) {
+                        if (! is_scalar($v)) {
+                            continue;
+                        }
 
-                    [$before, $after] = $records->partition(fn (array $record) => in_array($record['id'], $selectedIds, true));
+                        $selectedIds[] = (string) $v;
+                    }
+                    /** @var array<int,string> $selectedIds */
+                    [$before, $after] = $records->partition(function (array $record) use ($selectedIds): bool {
+                        $id = $record['id'] ?? null;
+
+                        if (! is_scalar($id)) {
+                            return false;
+                        }
+
+                        $idStr = (string) $id;
+                        /** @var string $idStr */
+
+                        return in_array($idStr, $selectedIds, true);
+                    });
 
                     /** @var \Illuminate\Support\Collection<int, array<string, mixed>> $before */
                     /** @var \Illuminate\Support\Collection<int, array<string, mixed>> $after */
@@ -80,18 +103,46 @@ class IconsTable
                 if (filled($search)) {
                     $searchLower = Str::lower($search);
 
-                    $records = $records->filter(fn (array $record): bool => str_contains($record['name_lower'], $searchLower));
+                    $records = $records->filter(function (array $record) use ($searchLower): bool {
+                        $nameLower = $record['name_lower'] ?? null;
+
+                        if (! is_scalar($nameLower)) {
+                            return false;
+                        }
+
+                        $nameLowerStr = (string) $nameLower;
+                        /** @var string $nameLowerStr */
+
+                        return str_contains($nameLowerStr, $searchLower);
+                    });
                 }
 
                 if (filled($sortColumn)) {
                     $records = $records->sortBy($sortColumn, SORT_REGULAR, $sortDirection === 'desc');
                 }
 
-                if (filled($set = $filters['set']['value'] ?? null)) {
-                    $records = $records->where('set', $set);
+                // Safely extract the 'set' filter value from the filters array.
+                $filterSet = null;
+                if (isset($filters['set']) && is_array($filters['set']) && array_key_exists('value', $filters['set'])) {
+                    $filterSet = $filters['set']['value'];
                 }
 
-                $keyedRecords = $records->mapWithKeys(fn (array $record) => [$record['id'] => $record]);
+                if (filled($filterSet) && is_scalar($filterSet)) {
+                    $records = $records->where('set', (string) $filterSet);
+                }
+
+                $keyedRecords = $records->mapWithKeys(function (array $record): array {
+                    $id = $record['id'] ?? null;
+
+                    if (is_scalar($id)) {
+                        $key = (string) $id;
+                    } else {
+                        $key = '';
+                    }
+
+                    /** @var string $key */
+                    return [$key => $record];
+                });
 
                 return new LengthAwarePaginator(
                     $keyedRecords->forPage($page, $recordsPerPage),
@@ -123,8 +174,23 @@ class IconsTable
                     ->options(
                         fn (Table $table) => collect($sets)
                             ->when(
-                                is_array($allowedSets = $table->getArguments()['sets'] ?? null) && count($allowedSets) > 0,
-                                fn (Collection $sets): Collection => $sets->filter(fn ($_, $key) => in_array($key, $allowedSets))
+                                function () use ($table) {
+                                    $allowedSets = $table->getArguments()['sets'] ?? null;
+
+                                    return is_array($allowedSets) && count($allowedSets) > 0;
+                                },
+                                function (Collection $sets) use ($table): Collection {
+                                    $allowedSets = $table->getArguments()['sets'] ?? null;
+
+                                    if (! is_array($allowedSets)) {
+                                        return $sets;
+                                    }
+
+                                    $allowedSetsArr = array_values($allowedSets);
+                                    /** @var array<int,string> $allowedSetsArr */
+
+                                    return $sets->filter(fn ($_, $key) => in_array($key, $allowedSetsArr, true));
+                                }
                             )
                             ->mapWithKeys(
                                 fn ($set, $key) => [$key => str($key)->headline()->toString()]
@@ -170,7 +236,12 @@ class IconsTable
                 continue;
             }
 
-            $prefix = $sets[$setName]['prefix'] ?? $setName;
+            $prefixRaw = $sets[$setName]['prefix'] ?? $setName;
+            if (! is_scalar($prefixRaw)) {
+                $prefix = (string) $setName;
+            } else {
+                $prefix = (string) $prefixRaw;
+            }
 
             foreach ($setGroups as $group) {
                 if (! is_iterable($group)) {
@@ -182,6 +253,7 @@ class IconsTable
                         continue;
                     }
 
+                    /** @var string $iconName */
                     $iconName = (string) $icon;
 
                     if ($iconName === '') {
@@ -189,10 +261,10 @@ class IconsTable
                     }
 
                     $records[] = [
-                        'id' => "{$prefix}-{$iconName}",
+                        'id' => $prefix . '-' . $iconName,
                         'name' => $iconName,
                         'name_lower' => Str::lower($iconName),
-                        'set' => $setName,
+                        'set' => (string) $setName,
                     ];
                 }
             }
