@@ -5,9 +5,11 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/psyao/filament-icon-picker/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/psyao/filament-icon-picker/actions?query=workflow%3A"Fix+PHP+code+styling"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/psyao/filament-icon-picker.svg?style=flat-square)](https://packagist.org/packages/psyao/filament-icon-picker)
 
-This package provides an `IconPicker` form field for [Filament](https://filamentphp.com/) that allows users to select
-icons from the collections registered with [Blade Icons](https://blade-ui-kit.com/docs/icons/introduction). By default,
-heroicons are supported, but you can easily add more icon sets by registering them with Blade Icons.
+A Filament form field that provides a searchable icon picker backed
+by [Blade UI Icons](https://blade-ui-kit.com/docs/icons/introduction).
+
+By default, [Filament](https://filamentphp.com/docs/4.x/styling/icons) adds heroicons out of the box. You can
+easily add more icon sets by registering them with Blade Icons.
 
 ## Features
 
