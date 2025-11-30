@@ -158,7 +158,7 @@ class IconsTable
                             ->icon(fn ($state) => $state)
                             ->size(IconSize::TwoExtraLarge)
                             ->boolean(false)
-                            ->tooltip(fn ($record) => $record['name'])
+                            ->tooltip(fn (array $record) => $record['name'] ?? '')
                             ->grow(false),
                         TextColumn::make('name')
                             ->size(TextSize::ExtraSmall)
