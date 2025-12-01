@@ -91,7 +91,7 @@ To display the selected icon in a Filament table, use `IconColumn`:
 use Filament\Tables\Columns\IconColumn;
 
 IconColumn::make('icon')
-    ->icon(fn ($state) => $state)
+    ->icon(fn ($state) => $state))
 ```
 
 ### In infolists
@@ -102,7 +102,7 @@ To display the selected icon in an infolist, use `IconEntry`:
 use Filament\Infolists\Components\IconEntry;
 
 IconEntry::make('status')
-    ->icon(fn ($state) => $state)
+    ->icon(fn ($state) => $state))
 ```
 
 ### In Blade views
